@@ -1,0 +1,273 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("VernyHUB", "BloodTheme")
+
+local Main = Window:NewTab("Main")
+
+local MainSection = Main:NewSection("AutoFarm")
+
+--autotaper
+
+MainSection:NewToggle("AutoTap", "Automatically Taps for you", function(state)
+    if state then
+        _G.autotaper = true;
+
+
+spawn(function()
+while _G.autotaper == true do
+game:GetService("ReplicatedStorage").Remotes.Tap:FireServer()
+wait()
+  end
+end)
+    else
+        _G.autotaper = false;
+
+
+spawn(function()
+while _G.autotaper == true do
+game:GetService("ReplicatedStorage").Remotes.Tap:FireServer()
+wait()
+  end
+end)
+    end
+end)
+
+--rebirth
+
+local MainSection = Main:NewSection("AutoRebirth")
+
+
+MainSection:NewToggle("AutoRebirth", "Autorebirth bruhther", function(state)
+ _G.Autorebirth = state
+end)
+
+
+MainSection:NewDropdown("Select rebirth option", "negro", {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43"}, function(currentOption)
+    _G.open = currentOption
+    print(_G.open)
+end)
+
+task.spawn(function()
+while task.wait() do
+    if _G.Autorebirth then
+         if _G.open ~= nil then
+            game:GetService("ReplicatedStorage").Remotes.Rebirth:FireServer(tonumber(_G.open))
+      end
+    end
+  end 
+end)
+
+
+--autoequipbest
+
+local MainSection = Main:NewSection("Pets")
+
+
+
+MainSection:NewButton("AutoEquipBest", "Automatically equips ur best pets", function()
+    _G.autoequip = true;
+
+
+
+
+    task.spawn(function()
+        while _G.autoequip == true do
+    game:GetService("ReplicatedStorage").Remotes.UnequipAll:InvokeServer()
+    wait(0.2)
+    game:GetService("ReplicatedStorage").Remotes.EquipBest:InvokeServer()
+    wait()
+    break;
+      end
+    end)
+end)
+
+--auto egg
+
+local Main = Window:NewTab("AutoEgg")
+
+local MainSection = Main:NewSection("AutoEggs")
+
+local eggs = {}
+for i,v in ipairs(game:GetService("Workspace").Eggs:GetChildren()) do
+    table.insert(eggs, v.Name)
+end
+
+
+MainSection:NewDropdown("Select Egg", "Select the egg u wanna hatch", {unpack(eggs)}, function(currentOption)
+    print(currentOption)
+    _G.egg = currentOption
+end)
+
+MainSection:NewToggle("AutoHatch", "negro", function(state)
+    _G.autoegg = state
+    while task.wait() do
+        if _G.autoegg and _G.egg ~= nil then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Eggs[tostring(_G.egg)].E.CFrame
+            game:GetService("ReplicatedStorage").Remotes.BuyEgg:InvokeServer(_G.egg, 3)
+        end
+    end
+end)
+
+
+--world tp
+
+local Main = Window:NewTab("World TP")
+
+local MainSection = Main:NewSection("World TPs")
+
+MainSection:NewLabel("Must have the world unlocked")
+
+
+for i,v in ipairs(game:GetService("Workspace").Areas:GetChildren()) do
+    MainSection:NewButton("TP To Map".." "..tostring(i), "Teleports you to the zone".." "..tostring(i), function()
+        local args = {
+            [1] = i
+        }
+        game:GetService("ReplicatedStorage").Remotes.TeleportToArea:FireServer(unpack(args))
+    end)
+end
+
+
+
+--Machines/GUIS
+
+
+
+-- auto boosts
+local Main = Window:NewTab("AutoVials")
+local MainSection = Main:NewSection("AutoVials Use")
+
+MainSection:NewToggle("AutoRebirthVial", "Automatically uses all of ur rebirth vials", function(state)
+    if state then
+        _G.autoboost = true;
+
+
+task.spawn(function()
+while _G.autoboost == true do
+game:GetService("ReplicatedStorage").Remotes.UseVial:FireServer("VialRebirths")
+wait()
+  end
+end)
+    else
+        _G.autoboost = false;
+
+
+task.spawn(function()
+while _G.autoboost == true do
+game:GetService("ReplicatedStorage").Remotes.UseVial:FireServer("VialRebirths")
+wait()
+  end
+end)
+    end
+end)
+
+
+MainSection:NewToggle("AutoTapVial", "Automatically uses all of ur tap vials", function(state)
+    if state then
+        _G.autoboost = true;
+
+
+task.spawn(function()
+while _G.autoboost == true do
+game:GetService("ReplicatedStorage").Remotes.UseVial:FireServer("VialTaps")
+wait()
+  end
+end)
+    else
+        _G.autoboost = false;
+
+
+task.spawn(function()
+while _G.autoboost == true do
+game:GetService("ReplicatedStorage").Remotes.UseVial:FireServer("VialTaps")
+wait()
+  end
+end)
+    end
+end)
+
+MainSection:NewToggle("AutoLuckVial", "Automatically uses all of ur luck vials", function(state)
+    if state then
+        _G.autoboost = true;
+
+
+task.spawn(function()
+while _G.autoboost == true do
+game:GetService("ReplicatedStorage").Remotes.UseVial:FireServer("VialRebirths")
+wait()
+  end
+end)
+    else
+        _G.autoboost = false;
+
+
+task.spawn(function()
+while _G.autoboost == true do
+game:GetService("ReplicatedStorage").Remotes.UseVial:FireServer("VialLuck")
+wait()
+  end
+end)
+    end
+end)
+
+
+MainSection:NewToggle("AutoDmgVial", "Automatically uses all of ur dmg vials", function(state)
+    if state then
+        _G.autoboost = true;
+
+
+task.spawn(function()
+while _G.autoboost == true do
+game:GetService("ReplicatedStorage").Remotes.UseVial:FireServer("VialDamage")
+wait()
+  end
+end)
+    else
+        _G.autoboost = false;
+
+
+task.spawn(function()
+while _G.autoboost == true do
+game:GetService("ReplicatedStorage").Remotes.UseVial:FireServer("VialDamage")
+wait()
+  end
+end)
+    end
+end)
+
+
+
+--misc
+
+local Main = Window:NewTab("Misc")
+
+local MainSection = Main:NewSection("Player")
+
+
+MainSection:NewSlider("Walkspeed", "Changes ur speed", 500, 30, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+MainSection:NewSlider("Jumppower", "Changes ur Jumppower", 350, 50, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+
+MainSection:NewButton("Reset WS/JS", "Resets them to default", function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+end)
+
+
+
+--toggle ui
+
+
+local Main = Window:NewTab("UIToggle")
+
+local MainSection = Main:NewSection("Toggle UI")
+
+
+
+
+MainSection:NewKeybind("ToggleUI", "Closes/Opens", Enum.KeyCode.G, function()
+	Library:ToggleUI()
+end)
